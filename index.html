@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emelt Szintű Kémia: Sav-bázis reakciók</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- MathJax for chemical formulas and equations -->
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true,
+                tags: 'ams'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; scroll-behavior: smooth; }
+        .equation-box { overflow-x: auto; padding: 1rem 0; }
+        .solution { display: none; }
+        /* Elrejti a görgetősávot a vízszintes menüben, de görgethető marad */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        /* Felülírja a scroll-margin-t, hogy a vastagabb fixált menü ne takarja ki a címeket */
+        section { scroll-margin-top: 10rem !important; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 relative">
+
+    <!-- Header & Horizontal Nav -->
+    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 py-5 flex justify-between items-center">
+            <div>
+                <h1 class="text-2xl md:text-3xl font-bold tracking-tight">Sav-Bázis Reakciók és pH-számítás</h1>
+                <p class="text-indigo-200 mt-1 text-sm md:text-base">Felkészítő anyag az emelt szintű kémia érettségire</p>
+            </div>
+        </div>
+        
+        <!-- Vízszintes, görgethető menüsáv -->
+        <div class="bg-indigo-800 border-t border-indigo-700 shadow-md">
+            <div class="max-w-5xl mx-auto px-4">
+                <nav class="flex overflow-x-auto py-3 space-x-6 text-sm font-medium hide-scrollbar">
+                    <a href="#elmelet" class="whitespace-nowrap hover:text-indigo-200 transition-colors">1. Elméletek</a>
+                    <a href="#csoportositas" class="whitespace-nowrap hover:text-indigo-200 transition-colors">2. Csoportosítás</a>
+                    <a href="#amfoter" class="whitespace-nowrap hover:text-indigo-200 transition-colors">3. Amfoter</a>
+                    <a href="#ph-alapok" class="whitespace-nowrap hover:text-indigo-200 transition-colors">4. pH & Indikátorok</a>
+                    <a href="#eros-szamitas" class="whitespace-nowrap hover:text-indigo-200 transition-colors">5. Erős savak/bázisok</a>
+                    <a href="#gyenge-szamitas" class="whitespace-nowrap hover:text-indigo-200 transition-colors">6. Gyenge egyensúly</a>
+                    <a href="#hidrolizis" class="whitespace-nowrap hover:text-indigo-200 transition-colors">7. Hidrolízis</a>
+                    <a href="#puffer" class="whitespace-nowrap hover:text-indigo-200 transition-colors">8. Pufferek</a>
+                    <a href="#gyakorlas" class="whitespace-nowrap text-amber-400 hover:text-amber-200 font-bold transition-colors">9. Gyakorló feladatok</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Wrapper -->
+    <div class="max-w-5xl mx-auto px-4 py-8">
+        
+        <!-- Main Content -->
+        <main class="space-y-12">
+
+            <!-- 1. Elméletek -->
+            <section id="elmelet" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">1. Sav-bázis elméletek</h2>
+                <p class="mb-4">A sav-bázis reakciók (protolitikus folyamatok) a kémia egyik legfontosabb reakciótípusát jelentik. Két fő elméletet kell magabiztosan használnod az érettségin.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-blue-50 p-5 rounded-lg border border-blue-100">
+                        <h3 class="font-bold text-blue-800 mb-2">Arrhenius-elmélet (1887)</h3>
+                        <p class="text-sm">Csak vizes oldatokban értelmezhető.</p>
+                        <ul class="list-disc pl-5 mt-2 text-sm space-y-1">
+                            <li><strong>Savak:</strong> Vizes oldatban hidrogénionra ($H^+$) és savmaradék-anionra disszociálnak.</li>
+                            <li><strong>Bázisok:</strong> Vizes oldatban hidroxidionra ($OH^-$) és fémionra disszociálnak.</li>
+                        </ul>
+                        <div class="equation-box text-sm">
+                            $$ HCl \rightarrow H^+ + Cl^- $$
+                            $$ NaOH \rightarrow Na^+ + OH^- $$
+                        </div>
+                    </div>
+                    
+                    <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-100">
+                        <h3 class="font-bold text-indigo-800 mb-2">Brønsted-Lowry elmélet (1923)</h3>
+                        <p class="text-sm">Általánosabb elmélet, a proton ($H^+$) átmenetén alapul.</p>
+                        <ul class="list-disc pl-5 mt-2 text-sm space-y-1">
+                            <li><strong>Savak:</strong> Protonleadók (donorok).</li>
+                            <li><strong>Bázisok:</strong> Protonfelvevők (akceptorok).</li>
+                        </ul>
+                        <p class="text-sm mt-2">Itt <strong>konjugált sav-bázis párokról</strong> beszélünk. A sav protonleadás után bázissá válik, a bázis protonfelvétel után savvá.</p>
+                        <div class="equation-box text-sm">
+                            $$ \underbrace{NH_3}_{\text{bázis}_1} + \underbrace{H_2O}_{\text{sav}_2} \rightleftharpoons \underbrace{NH_4^+}_{\text{sav}_1} + \underbrace{OH^-}_{\text{bázis}_2} $$
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-50 p-5 rounded-lg border border-amber-200 mt-6">
+                    <h3 class="font-bold text-amber-800 mb-2">Alapfogalmak ismétlése: Mik azok a sók és a savmaradék ionok?</h3>
+                    <p class="mb-2"><strong>Savmaradék ion:</strong> A savmaradék ion az a negatív töltésű részecske (anion), amely a savmolekulából marad vissza, miután az leadta a hidrogéniont (protont).</p>
+                    <p><strong>Só:</strong> A só egy olyan szilárd, kristályos, ionos vegyület, amely pozitív töltésű kationokból (ezek leggyakrabban fémionok vagy például az ammóniumion) és negatív töltésű savmaradék ionokból épül fel. Amikor egy sav és egy bázis reagál egymással (ezt hívjuk közömbösítésnek), a víz mellett mindig egy só keletkezik.</p>
+                </div>
+            </section>
+
+            <!-- 2. Csoportosítás -->
+            <section id="csoportositas" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">2. Savak, bázisok csoportosítása és értékűsége</h2>
+                
+                <div class="bg-blue-50 p-5 rounded-lg border border-blue-200 mb-6">
+                    <h3 class="font-bold text-blue-800 mb-2">Mit jelent, hogy egy sav vagy bázis erős vagy gyenge?</h3>
+                    <p class="mb-2"><strong>Erős savak és erős bázisok:</strong> Erős savnak vagy erős bázisnak nevezzük azokat az anyagokat, amelyek vizes oldatban gyakorlatilag 100%-osan, azaz teljesen ionjaikra bomlanak (ezt a folyamatot disszociációnak hívjuk). Ilyenkor az oldatban már nem találunk egyben lévő kiindulási molekulákat, csak a belőlük keletkezett ionokat (például oxóniumiont és savmaradék iont).</p>
+                    <p><strong>Gyenge savak és gyenge bázisok:</strong> Ezzel szemben a gyenge savak és gyenge bázisok csak részlegesen bomlanak ionokra a vízben. Ez azt jelenti, hogy a molekuláiknak csak egy nagyon kis része (gyakran kevesebb, mint 5%-a) alakul ionná. Így az oldatban egyszerre vannak jelen a fel nem bomlott eredeti molekulák és a belőlük keletkezett ionok, és ezek között egy állandó, úgynevezett dinamikus egyensúlyi állapot alakul ki.</p>
+                </div>
+
+                <h3 class="font-bold text-lg mb-2">Értékűség (Bázicitás / Aciditás)</h3>
+                <p class="mb-4">A savak <strong>értékűsége</strong> azt mutatja meg, hogy egy molekulája hány protont képes leadni. A bázisoké azt, hány protont képes felvenni (vagy hány hidroxidiont ad a vízbe).</p>
+                
+                <h3 class="font-bold text-lg mt-6 mb-2">Gyakori savak és savmaradék ionjaik</h3>
+                <p class="text-sm mb-3">Ezeket a képleteket és neveket stabilan tudnod kell az érettségin! (A többértékű savak lépcsőzetesen adják le a protonjaikat, ezért többféle savmaradék ionjuk is van).</p>
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full bg-white border border-slate-200">
+                        <thead class="bg-indigo-100">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left">Sav neve</th>
+                                <th class="py-2 px-4 border-b text-left">Sav képlete</th>
+                                <th class="py-2 px-4 border-b text-left">Savmaradék ion(ok)</th>
+                                <th class="py-2 px-4 border-b text-left">Savmaradék ion neve</th>
+                                <th class="py-2 px-4 border-b text-left">Erősség</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Sósav (hidrogén-klorid oldata)</td>
+                                <td class="py-2 px-4 border-b">$HCl$</td>
+                                <td class="py-2 px-4 border-b">$Cl^-$</td>
+                                <td class="py-2 px-4 border-b">Kloridion</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Salétromsav</td>
+                                <td class="py-2 px-4 border-b">$HNO_3$</td>
+                                <td class="py-2 px-4 border-b">$NO_3^-$</td>
+                                <td class="py-2 px-4 border-b">Nitrátion</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Perklórsav</td>
+                                <td class="py-2 px-4 border-b">$HClO_4$</td>
+                                <td class="py-2 px-4 border-b">$ClO_4^-$</td>
+                                <td class="py-2 px-4 border-b">Perklorátion</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="py-2 px-4 border-b font-semibold bg-slate-50">Kénsav</td>
+                                <td rowspan="2" class="py-2 px-4 border-b">$H_2SO_4$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">$HSO_4^-$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">Hidrogén-szulfát-ion</td>
+                                <td rowspan="2" class="py-2 px-4 border-b text-green-600 font-bold">Erős (az 1. lépésben)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">$SO_4^{2-}$</td>
+                                <td class="py-2 px-4 border-b">Szulfátion</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="3" class="py-2 px-4 border-b font-semibold bg-slate-50">Foszforsav</td>
+                                <td rowspan="3" class="py-2 px-4 border-b">$H_3PO_4$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">$H_2PO_4^-$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">Di-hidrogén-foszfát-ion</td>
+                                <td rowspan="3" class="py-2 px-4 border-b text-amber-500 font-bold">Közepesen erős/gyenge</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b border-slate-100">$HPO_4^{2-}$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">Hidrogén-foszfát-ion</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">$PO_4^{3-}$</td>
+                                <td class="py-2 px-4 border-b">Foszfátion</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="py-2 px-4 border-b font-semibold bg-slate-50">Szénsav</td>
+                                <td rowspan="2" class="py-2 px-4 border-b">$H_2CO_3$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">$HCO_3^-$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">Hidrogén-karbonát-ion</td>
+                                <td rowspan="2" class="py-2 px-4 border-b text-red-500 font-bold">Gyenge</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">$CO_3^{2-}$</td>
+                                <td class="py-2 px-4 border-b">Karbonátion</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="py-2 px-4 border-b font-semibold bg-slate-50">Kénessav</td>
+                                <td rowspan="2" class="py-2 px-4 border-b">$H_2SO_3$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">$HSO_3^-$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">Hidrogén-szulfit-ion</td>
+                                <td rowspan="2" class="py-2 px-4 border-b text-red-500 font-bold">Gyenge</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">$SO_3^{2-}$</td>
+                                <td class="py-2 px-4 border-b">Szulfition</td>
+                            </tr>
+                            <tr>
+                                <td rowspan="2" class="py-2 px-4 border-b font-semibold bg-slate-50">Hidrogén-szulfid (Kénhidrogén)</td>
+                                <td rowspan="2" class="py-2 px-4 border-b">$H_2S$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">$HS^-$</td>
+                                <td class="py-2 px-4 border-b border-slate-100">Hidrogén-szulfid-ion</td>
+                                <td rowspan="2" class="py-2 px-4 border-b text-red-500 font-bold">Gyenge</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b">$S^{2-}$</td>
+                                <td class="py-2 px-4 border-b">Szulfidion</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Ecetsav</td>
+                                <td class="py-2 px-4 border-b">$CH_3COOH$</td>
+                                <td class="py-2 px-4 border-b">$CH_3COO^-$</td>
+                                <td class="py-2 px-4 border-b">Acetátion</td>
+                                <td class="py-2 px-4 border-b text-red-500 font-bold">Gyenge</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Hidrogén-fluorid</td>
+                                <td class="py-2 px-4 border-b">$HF$</td>
+                                <td class="py-2 px-4 border-b">$F^-$</td>
+                                <td class="py-2 px-4 border-b">Fluoridion</td>
+                                <td class="py-2 px-4 border-b text-red-500 font-bold">Gyenge</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="font-bold text-lg mb-2">Gyakori bázisok és lúgok</h3>
+                <p class="text-sm mb-3">Lúgnak nevezzük a vízben jól oldódó bázisok (pl. nátrium-hidroxid) lúgos kémhatású vizes oldatát.</p>
+                <div class="overflow-x-auto mb-6">
+                    <table class="min-w-full bg-white border border-slate-200">
+                        <thead class="bg-indigo-100">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left">Bázis neve</th>
+                                <th class="py-2 px-4 border-b text-left">Képlete</th>
+                                <th class="py-2 px-4 border-b text-left">Erősség</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-sm">
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Nátrium-hidroxid (Marónátron)</td>
+                                <td class="py-2 px-4 border-b">$NaOH$</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Kálium-hidroxid (Kálilúg)</td>
+                                <td class="py-2 px-4 border-b">$KOH$</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Kalcium-hidroxid (Mésztej / Oltott mész)</td>
+                                <td class="py-2 px-4 border-b">$Ca(OH)_2$</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős (de mérsékelten oldódik)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Bárium-hidroxid (Baritvíz)</td>
+                                <td class="py-2 px-4 border-b">$Ba(OH)_2$</td>
+                                <td class="py-2 px-4 border-b text-green-600 font-bold">Erős</td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-4 border-b font-semibold bg-slate-50">Ammónia (Ammóniaoldat / Szalmiákszesz)</td>
+                                <td class="py-2 px-4 border-b">$NH_3$</td>
+                                <td class="py-2 px-4 border-b text-red-500 font-bold">Gyenge</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. Amfoter -->
+            <section id="amfoter" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">3. Amfoter vegyületek</h2>
+                <p class="mb-4">Amfoternek nevezzük azokat a részecskéket, amelyek a reakciópartnerüktől függően <strong>savként és bázisként is</strong> képesek viselkedni (protont leadni és felvenni is tudnak).</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-slate-700">Víz ($H_2O$) autoprotolízise:</h4>
+                        <div class="equation-box">
+                            $$ H_2O + H_2O \rightleftharpoons H_3O^+ + OH^- $$
+                        </div>
+                        <p class="text-sm">Az egyik vízmolekula sav, a másik bázis.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-slate-700">Többértékű savak savmaradék-ionjai:</h4>
+                        <p class="text-sm">Pl. a hidrogén-karbonát ion ($HCO_3^-$):</p>
+                        <ul class="text-sm list-none space-y-2 mt-2">
+                            <li>Savként: $HCO_3^- + OH^- \rightleftharpoons CO_3^{2-} + H_2O$</li>
+                            <li>Bázisként: $HCO_3^- + H_3O^+ \rightleftharpoons H_2CO_3 + H_2O$</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="bg-amber-50 p-4 rounded-lg mt-4 border border-amber-200">
+                    <h4 class="font-bold text-amber-800">Amfoter fém-hidroxidok (Gyakori érettségi téma!)</h4>
+                    <p class="text-sm mt-1">Az alumínium-hidroxid, a cink-hidroxid és az ón/ólom-hidroxidok erős savakkal és erős lúgokkal is reagálnak.</p>
+                    <div class="equation-box text-sm">
+                        Savval: $$ Al(OH)_3 + 3HCl \rightarrow AlCl_3 + 3H_2O $$
+                        Lúggal (komplexképződés): $$ Al(OH)_3 + NaOH \rightarrow Na[Al(OH)_4] $$
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. pH és Indikátorok -->
+            <section id="ph-alapok" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">4. A vízionszorzat, a pH fogalma és az indikátorok</h2>
+                
+                <div class="flex flex-col md:flex-row gap-6 mb-6">
+                    <div class="md:w-1/2">
+                        <p class="mb-2">A tiszta víz autoprotolízise miatt mindig tartalmaz $H_3O^+$ és $OH^-$ ionokat. Ezek szorzata standard körülmények között ($25^\circ C$) állandó:</p>
+                        <div class="bg-slate-100 p-3 rounded text-center font-mono">
+                            $$ K_v = [H_3O^+]_e \cdot [OH^-]_e = 10^{-14} \ (\frac{mol}{dm^3})^2 $$
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-bold text-blue-800">A pH és pOH definíciója</h4>
+                        <div class="equation-box text-sm">
+                            $$ pH = -\lg[H_3O^+]_e $$
+                            $$ pOH = -\lg[OH^-]_e $$
+                            $$ pH + pOH = 14 $$
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="font-bold text-lg mb-3">Sav-bázis indikátorok</h3>
+                <p class="text-sm mb-4">Az indikátorok gyenge savak vagy bázisok, melyek disszociálatlan molekulájának és konjugált párjának (ionjának) más a színe. Az oldat pH-ja határozza meg, melyik forma van túlsúlyban.</p>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-slate-200 text-sm">
+                        <thead class="bg-slate-100">
+                            <tr>
+                                <th class="py-2 px-4 border-b text-left">Indikátor</th>
+                                <th class="py-2 px-4 border-b text-left">Savas szín</th>
+                                <th class="py-2 px-4 border-b text-left">Átcsapási tartomány (pH)</th>
+                                <th class="py-2 px-4 border-b text-left">Lúgos szín</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="py-2 px-4 border-b font-semibold">Metilnarancs</td><td class="py-2 px-4 border-b text-red-600 font-bold">Piros</td><td class="py-2 px-4 border-b">3,1 - 4,4 (vöröshagymahéj)</td><td class="py-2 px-4 border-b text-yellow-600 font-bold">Sárga</td></tr>
+                            <tr><td class="py-2 px-4 border-b font-semibold">Lakmusz</td><td class="py-2 px-4 border-b text-red-600 font-bold">Piros</td><td class="py-2 px-4 border-b">5,0 - 8,0 (ibolya)</td><td class="py-2 px-4 border-b text-blue-600 font-bold">Kék</td></tr>
+                            <tr><td class="py-2 px-4 border-b font-semibold">Fenolftalein</td><td class="py-2 px-4 border-b text-slate-400 font-bold">Színtelen</td><td class="py-2 px-4 border-b">8,2 - 10,0 (halvány rózsaszín)</td><td class="py-2 px-4 border-b text-pink-600 font-bold">Lilásvörös</td></tr>
+                            <tr><td class="py-2 px-4 border-b font-semibold">Univerzális</td><td class="py-2 px-4 border-b">Piros / Sárga</td><td class="py-2 px-4 border-b">~7 (Zöld - semleges)</td><td class="py-2 px-4 border-b">Kék / Ibolya</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 5. Erős savak/bázisok -->
+            <section id="eros-szamitas" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">5. Erős savak és bázisok pH-számítása</h2>
+                <p class="mb-4">Erős savak és bázisok híg vizes oldatban gyakorlatilag <strong>100%-osan (teljesen) disszociálnak</strong>. Emiatt az oxóniumion vagy hidroxidion koncentrációja megegyezik a kiindulási sav/bázis koncentrációjával, megszorozva az értékűséggel.</p>
+                
+                <div class="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
+                    <h3 class="font-bold text-green-800 mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        1. Minta Feladat: Kétértékű erős sav
+                    </h3>
+                    <p class="font-medium">Számítsa ki a $0,025 \ mol/dm^3$ koncentrációjú kénsavoldat ($H_2SO_4$) pH-ját! (Feltételezzük a teljes disszociációt mindkét lépcsőben).</p>
+                    <div class="mt-4 p-4 bg-white rounded shadow-inner space-y-2">
+                        <p><strong>Megoldás lépései:</strong></p>
+                        <ol class="list-decimal pl-5 space-y-1">
+                            <li>Írjuk fel a disszociáció egyenletét: $$ H_2SO_4 \rightarrow 2H^+ + SO_4^{2-} $$</li>
+                            <li>Látható, hogy 1 mol savból 2 mol $H^+$ keletkezik. Tehát az oxóniumion-koncentráció a savkoncentráció duplája.</li>
+                            <li>$$ [H_3O^+]_e = 2 \cdot c_{sav} = 2 \cdot 0,025 \ mol/dm^3 = 0,05 \ mol/dm^3 $$</li>
+                            <li>Számoljuk ki a pH-t: $$ pH = -\lg(0,05) = 1,30 $$</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <h3 class="font-bold text-green-800 mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        2. Minta Feladat: Egyértékű erős lúg hígítása
+                    </h3>
+                    <p class="font-medium">$10,0 \ cm^3$ $0,15 \ mol/dm^3$-es kálium-hidroxid ($KOH$) oldatot $500 \ cm^3$-re hígítunk vízzel. Mennyi lesz az új oldat pH-ja?</p>
+                    <div class="mt-4 p-4 bg-white rounded shadow-inner space-y-2">
+                        <p><strong>Megoldás lépései:</strong></p>
+                        <ol class="list-decimal pl-5 space-y-1">
+                            <li>Számítsuk ki az oldott anyag anyagmennyiségét (ami hígításkor nem változik): <br>
+                                $$ n_{KOH} = c_1 \cdot V_1 = 0,15 \ mol/dm^3 \cdot 0,010 \ dm^3 = 0,0015 \ mol $$</li>
+                            <li>Számítsuk ki az új koncentrációt: <br>
+                                $$ c_2 = \frac{n}{V_2} = \frac{0,0015 \ mol}{0,500 \ dm^3} = 0,003 \ mol/dm^3 $$</li>
+                            <li>Mivel a KOH erős, egyértékű lúg, $[OH^-]_e = c_2 = 0,003 \ mol/dm^3$.</li>
+                            <li>Számítsuk ki a pOH-t: $$ pOH = -\lg(0,003) = 2,52 $$</li>
+                            <li>Számítsuk ki a pH-t: $$ pH = 14 - pOH = 14 - 2,52 = 11,48 $$</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 6. Gyenge savak/bázisok -->
+            <section id="gyenge-szamitas" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">6. Gyenge savak, bázisok és a kémiai egyensúly</h2>
+                <p class="mb-4">A gyenge savak ($HA$) és bázisok ($B$) vízben csak <strong>részlegesen disszociálnak</strong>, így dinamikus egyensúly alakul ki. Ezt a folyamatot a savállandó ($K_s$) vagy bázisállandó ($K_b$), illetve a disszociációfok ($\alpha$) jellemzi.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-6 text-sm">
+                    <div class="bg-slate-50 p-4 border rounded">
+                        <h4 class="font-bold text-center mb-2">Savállandó ($K_s$)</h4>
+                        $$ HA + H_2O \rightleftharpoons H_3O^+ + A^- $$
+                        $$ K_s = \frac{[H_3O^+]_e \cdot [A^-]_e}{[HA]_e} $$
+                    </div>
+                    <div class="bg-slate-50 p-4 border rounded">
+                        <h4 class="font-bold text-center mb-2">Disszociációfok ($\alpha$)</h4>
+                        <p class="text-center">Megmutatja, hogy a bemért anyag hányadrésze/százaléka disszociált.</p>
+                        $$ \alpha = \frac{\text{disszociált mólok}}{\text{összes mól}} = \frac{[H^+]_e}{c_{sav}} $$
+                        <p class="text-center mt-2 font-semibold text-red-600">Ostwald-féle hígítási törvény:</p>
+                        $$ K_s = \frac{\alpha^2 \cdot c}{1 - \alpha} \approx \alpha^2 \cdot c \ (\text{ha } \alpha < 0,05) $$
+                    </div>
+                </div>
+
+                <div class="bg-indigo-50 border border-indigo-200 p-6 rounded-xl mb-6 shadow-sm">
+                    <h3 class="font-bold text-indigo-800 mb-3 text-lg">A kulcs a számításokhoz: Miért használjuk a "$c - x$" kifejezést?</h3>
+                    <p class="mb-3">A gyenge savak és bázisok egyensúlyi képletében (és az érettségi megoldókulcsokban is) gyakran találkozol a nevezőben a <strong>$c - x$</strong> kifejezéssel. Nem kell megijedni tőle, ez pusztán a folyamat logikai lekövetése:</p>
+                    <ul class="list-disc pl-5 space-y-3 text-sm mb-4">
+                        <li><strong>Kiindulás ($c$):</strong> Amikor elkészítjük az oldatot, beleteszünk valamennyi savat a vízbe. Ezt a kezdeti, eredeti koncentrációt jelöljük <strong>$c$</strong>-vel. Ekkor még (gondolatban) egyetlen molekula sem esett szét ionjaira.</li>
+                        <li><strong>Átalakulás ($x$):</strong> Mivel a sav gyenge, nem bomlik fel (nem disszociál) 100%-osan, csak egy bizonyos, viszonylag kis része. Ezt a felbomló, ionokra eső mennyiséget jelöljük ismeretlenként, <strong>$x$</strong>-szel.</li>
+                        <li><strong>Ionok keletkezése:</strong> A reakcióegyenlet ($HA \rightleftharpoons H^+ + A^-$) alapján minden $1$ db felbomló $HA$ molekulából $1$ db $H^+$ és $1$ db savmaradék $A^-$ ion keletkezik. Mivel az $x$ mennyiség bomlott fel, ezért az egyensúlyi állapotban az ionok koncentrációja is <strong>$x$</strong> lesz ($[H^+]_e = x$ és $[A^-]_e = x$).</li>
+                        <li><strong>Egyensúlyi maradék ($c - x$):</strong> Mennyi marad az eredeti savból egyben, felbontatlanul a vízben? Nagyon egyszerű: a kiindulási mennyiségből ($c$) ki kell vonni azt, ami felbomlott ($x$). Ezért az egyensúlyban lévő (disszociálatlan) sav koncentrációja: <strong>$[HA]_e = c - x$</strong>.</li>
+                    </ul>
+                    <p class="text-sm mb-2">Ha ezeket a koncentrációkat behelyettesítjük a savállandó ($K_s$) definíciójába:</p>
+                    <div class="bg-white p-3 rounded text-center border font-mono text-sm mb-3">
+                        $$ K_s = \frac{[H^+]_e \cdot [A^-]_e}{[HA]_e} = \frac{x \cdot x}{c - x} = \frac{x^2}{c - x} $$
+                    </div>
+                    <p class="text-sm italic text-slate-600 bg-white p-2 rounded">Ezt a logikát a feladatok megoldása során egy úgynevezett <strong>K-Á-E (Kiindulás - Átalakulás - Egyensúly)</strong> táblázatban szoktuk összefoglalni, hogy ne vesszünk el az adatokban.</p>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                    <h4 class="font-bold text-red-800">Emelt szintű tipp: A kivonás elhanyagolása</h4>
+                    <p class="text-sm">Az emelt érettségin, ha felírod a K-Á-E táblázatot és eljutsz a $K_s = \frac{x^2}{c - x}$ képlethez, van egy kiskapu: ha a disszociáció mértéke kicsi (a sav gyenge, és az oldat nem túlságosan híg, így $\alpha < 5\%$), akkor a nevezőben az $x$ értéke olyan kicsi a $c$-hez képest, hogy a kivonásnál <strong>elhanyagolható</strong>. Vagyis $c - x \approx c$. Így a képlet leegyszerűsödik: <strong>$K_s = \frac{x^2}{c}$</strong>, amiből gyökvonással egyből megkapod az oxóniumionokat: <strong>$[H^+]_e = x = \sqrt{K_s \cdot c}$</strong>.</p>
+                </div>
+                    <p class="text-sm italic text-slate-600 bg-white p-2 rounded">Ezt a logikát a feladatok megoldása során egy úgynevezett <strong>K-Á-E (Kiindulás - Átalakulás - Egyensúly)</strong> táblázatban szoktuk összefoglalni, hogy ne vesszünk el az adatokban.</p>
+                </div>
+
+                <div class="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+                    <h4 class="font-bold text-red-800">Emelt szintű tipp: A kivonás elhanyagolása</h4>
+                    <p class="text-sm">Az emelt érettségin, ha felírod a K-Á-E táblázatot és eljutsz a $K_s = \frac{x^2}{c - x}$ képlethez, van egy kiskapu: ha a disszociáció mértéke kicsi (a sav gyenge, és az oldat nem túlságosan híg, így $\alpha < 5\%$), akkor a nevezőben az $x$ értéke olyan kicsi a $c$-hez képest, hogy a kivonásnál <strong>elhanyagolható</strong>. Vagyis $c - x \approx c$. Így a képlet leegyszerűsödik: <strong>$K_s = \frac{x^2}{c}$</strong>, amiből gyökvonással egyből megkapod az oxóniumionokat: <strong>$[H^+] = x = \sqrt{K_s \cdot c}$</strong>.</p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <h3 class="font-bold text-green-800 mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        3. Minta Feladat: Gyenge sav pH-ja és disszociációfoka
+                    </h3>
+                    <p class="font-medium">Mennyi a pH-ja és a disszociációfoka a $0,100 \ mol/dm^3$ koncentrációjú ecetsavoldatnak? A savállandó $K_s = 1,8 \cdot 10^{-5}$.</p>
+                    <div class="mt-4 p-4 bg-white rounded shadow-inner overflow-x-auto text-sm">
+                        <p class="mb-2"><strong>1. Lépés: K-Á-E táblázat felírása</strong></p>
+                        <table class="min-w-full text-center border-collapse border border-slate-300 mb-4">
+                            <tr>
+                                <th class="border border-slate-300 p-1"></th>
+                                <th class="border border-slate-300 p-1">$CH_3COOH$</th>
+                                <th class="border border-slate-300 p-1">$\rightleftharpoons$</th>
+                                <th class="border border-slate-300 p-1">$CH_3COO^-$</th>
+                                <th class="border border-slate-300 p-1">$+$</th>
+                                <th class="border border-slate-300 p-1">$H^+$</th>
+                            </tr>
+                            <tr>
+                                <td class="border border-slate-300 p-1 text-left font-bold">Kiindulás ($mol/dm^3$)</td>
+                                <td class="border border-slate-300 p-1">0,100</td>
+                                <td class="border border-slate-300 p-1"></td>
+                                <td class="border border-slate-300 p-1">0</td>
+                                <td class="border border-slate-300 p-1"></td>
+                                <td class="border border-slate-300 p-1">~0</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-slate-300 p-1 text-left font-bold text-red-600">Átalakulás ($mol/dm^3$)</td>
+                                <td class="border border-slate-300 p-1 text-red-600">$-x$</td>
+                                <td class="border border-slate-300 p-1"></td>
+                                <td class="border border-slate-300 p-1 text-red-600">$+x$</td>
+                                <td class="border border-slate-300 p-1"></td>
+                                <td class="border border-slate-300 p-1 text-red-600">$+x$</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-slate-300 p-1 text-left font-bold">Egyensúly ($mol/dm^3$)</td>
+                                <td class="border border-slate-300 p-1">0,100 $- x$</td>
+                                <td class="border border-slate-300 p-1"></td>
+                                <td class="border border-slate-300 p-1">$x$</td>
+                                <td class="border border-slate-300 p-1"></td>
+                                <td class="border border-slate-300 p-1">$x$</td>
+                            </tr>
+                        </table>
+                        
+                        <p class="mb-2"><strong>2. Lépés: Behelyettesítés a $K_s$ képletébe</strong></p>
+                        $$ 1,8 \cdot 10^{-5} = \frac{x \cdot x}{0,100 - x} $$
+                        <p class="mb-2">Mivel $K_s$ nagyon kicsi ($10^{-5}$ nagyságrendű), $x$ elhanyagolható $0,100$ mellett a kivonásnál (ellenőrizni kell a végén!):</p>
+                        $$ 1,8 \cdot 10^{-5} \approx \frac{x^2}{0,100} $$
+                        $$ x^2 = 1,8 \cdot 10^{-6} \Rightarrow x = [H^+]_e = 1,34 \cdot 10^{-3} \ mol/dm^3 $$
+                        
+                        <p class="mb-2"><strong>3. Lépés: pH és $\alpha$ számítása</strong></p>
+                        $$ pH = -\lg(1,34 \cdot 10^{-3}) = \mathbf{2,87} $$
+                        $$ \alpha = \frac{x}{c} = \frac{1,34 \cdot 10^{-3}}{0,100} = 0,0134 \ (\mathbf{1,34\%}) $$
+                        <p class="text-xs text-gray-500 italic mt-1">(Mivel az $\alpha < 5\%$, az elhanyagolás jogos volt.)</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 7. Hidrolízis -->
+            <section id="hidrolizis" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">7. Sók hidrolízise (Sóképződés és kémhatás)</h2>
+                <p class="mb-4">Ha egy savat és egy bázist reagáltatunk, só és víz keletkezik (közömbösítés). A sók vizes oldata azonban <strong>nem mindig semleges!</strong> A kémhatást az határozza meg, hogy a sót felépítő ionok képesek-e reakcióba (hidrolízisbe) lépni a vízzel.</p>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                    <div class="border rounded p-4 bg-slate-50 text-center">
+                        <h4 class="font-bold text-slate-700">Erős sav + Erős bázis</h4>
+                        <p class="text-2xl font-bold text-green-600 my-2">pH ≈ 7</p>
+                        <p class="text-sm">Nincs hidrolízis.<br>Pl.: $NaCl, KNO_3$</p>
+                    </div>
+                    <div class="border rounded p-4 bg-red-50 text-center">
+                        <h4 class="font-bold text-red-700">Erős sav + Gyenge bázis</h4>
+                        <p class="text-2xl font-bold text-red-600 my-2">pH < 7 (Savas)</p>
+                        <p class="text-sm">A kation hidrolizál.<br>Pl.: $NH_4Cl, AlCl_3$</p>
+                    </div>
+                    <div class="border rounded p-4 bg-blue-50 text-center">
+                        <h4 class="font-bold text-blue-700">Gyenge sav + Erős bázis</h4>
+                        <p class="text-2xl font-bold text-blue-600 my-2">pH > 7 (Lúgos)</p>
+                        <p class="text-sm">Az anion hidrolizál.<br>Pl.: $Na_2CO_3, CH_3COONa$</p>
+                    </div>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <h3 class="font-bold text-green-800 mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        4. Minta Feladat: Sós hidrolízis egyenlete és magyarázata
+                    </h3>
+                    <p class="font-medium">Írja fel az ammónium-klorid ($NH_4Cl$) vizes oldatában lejátszódó hidrolízis egyenletét, és magyarázza meg a kémhatást!</p>
+                    <div class="mt-4 p-4 bg-white rounded shadow-inner text-sm space-y-2">
+                        <p><strong>Megoldás:</strong></p>
+                        <p>A só vízben teljesen disszociál: $NH_4Cl \rightarrow NH_4^+ + Cl^-$</p>
+                        <p>A kloridion ($Cl^-$) egy erős sav ($HCl$) maradéka, nem reagál a vízzel.</p>
+                        <p>Az ammóniumion ($NH_4^+$) egy gyenge bázis ($NH_3$) konjugált sava, ezért protont ad át a víznek (hidrolizál):</p>
+                        <div class="equation-box font-bold text-center">
+                            $$ NH_4^+ + H_2O \rightleftharpoons NH_3 + H_3O^+ $$
+                        </div>
+                        <p>A folyamat során oxóniumionok ($H_3O^+$) keletkeznek, ezért az oldat <strong>savas kémhatású</strong> lesz.</p>
+                        <p><em>Megjegyzés: Hidrolízis állandó számítása: $K_h = \frac{K_v}{K_b}$ (ahol $K_b$ az ammónia bázisállandója). Ebből a pH a gyenge savakhoz hasonlóan K-Á-E táblázattal számolható.</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 8. Pufferek -->
+            <section id="puffer" class="bg-white rounded-xl shadow-md p-8 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-800 mb-4">8. Pufferoldatok</h2>
+                <div class="bg-indigo-50 p-5 rounded-lg border border-indigo-200 mb-6">
+                    <h3 class="font-bold text-indigo-800 mb-2">Mi az a pufferoldat, és miért olyan fontos?</h3>
+                    <p class="mb-2">A <strong>pufferoldat</strong> egy olyan különleges kémiai rendszer, amely képes megakadályozni az oldat hirtelen és drasztikus pH-változását. Képzeld el úgy, mint egy "kémiai lengéscsillapítót": ha a pufferoldathoz egy kevés erős savat vagy erős lúgot adunk, az oldat kémhatása (pH-ja) alig változik meg.</p>
+                    <p>Ennek az a kémiai magyarázata, hogy a pufferoldatban lévő anyagok (egy gyenge sav/bázis és a konjugált párja) "elfogják" a hozzáadott savból származó oxóniumionokat, vagy a lúgból származó hidroxidionokat, így azok nem tudják jelentősen eltolni a pH-t. Például az emberi vér is egy kiváló pufferrendszer (főként hidrogén-karbonát ionokkal), amely szigorúan 7,35 és 7,45 közötti pH-n tartja a szervezetünket, kivédve a savasító vagy lúgosító biológiai folyamatok hatásait.</p>
+                </div>
+                
+                <h3 class="font-bold mt-4 mb-2">Miből áll egy puffer?</h3>
+                <ul class="list-disc pl-5 mb-4">
+                    <li><strong>Savas puffer:</strong> Egy gyenge sav és annak erős bázissal alkotott sója (pl. $CH_3COOH$ és $CH_3COONa$).</li>
+                    <li><strong>Lúgos puffer:</strong> Egy gyenge bázis és annak erős savval alkotott sója (pl. $NH_3$ és $NH_4Cl$).</li>
+                </ul>
+
+                <div class="bg-indigo-50 border border-indigo-200 p-6 rounded-xl mb-6 shadow-sm">
+                    <h4 class="font-bold text-indigo-800 mb-3 text-lg">Honnan jön a puffer képlete? (A levezetés)</h4>
+                    <p class="mb-3 text-sm">Ne csak magold be a képletet, értsd is meg! Nézzük meg egy savas puffer (gyenge sav, $HA$ és a sója, pl. $NaA$) példáján, hogyan kapjuk meg a pH-t:</p>
+                    
+                    <ol class="list-decimal pl-5 space-y-3 text-sm mb-4">
+                        <li><strong>Induljunk ki a gyenge sav egyensúlyából és a savállandóból:</strong><br>
+                        $$HA \rightleftharpoons H^+ + A^- \quad \Rightarrow \quad K_s = \frac{[H^+]_e \cdot [A^-]_e}{[HA]_e}$$</li>
+                        
+                        <li><strong>Fejezzük ki az oxóniumionokat ($[H^+]_e$):</strong><br>
+                        Szorozzuk meg az egyenletet $[HA]_e$-val, és osszuk le $[A^-]_e$-szal:<br>
+                        $$[H^+]_e = K_s \cdot \frac{[HA]_e}{[A^-]_e}$$</li>
+                        
+                        <li><strong>A kémiai "trükk" (közelítések):</strong>
+                            <ul class="list-disc pl-5 mt-2 space-y-1">
+                                <li>Mivel a sav eleve gyenge, ráadásul a jelenlévő sóból rengeteg $A^-$ ion van az oldatban, a <em>Le Chatelier-elv</em> miatt a sav disszociációja szinte teljesen visszaszorul. Ezért a sav egyensúlyi koncentrációja ($[HA]_e$) gyakorlatilag megegyezik a kiindulási, bemért savkoncentrációval: <strong>$[HA]_e \approx c_{sav}$</strong>.</li>
+                                <li>A jelenlévő $A^-$ anionok szinte 100%-a a jól oldódó (teljesen disszociáló) sóból származik (a gyenge savból származó anion elhanyagolhatóan kevés). Így az anion koncentrációja megegyezik a só koncentrációjával: <strong>$[A^-]_e \approx c_{so}$</strong>.</li>
+                            </ul>
+                        </li>
+                        
+                        <li><strong>Helyettesítsük be ezeket a képletbe:</strong><br>
+                        Így kapjuk meg az érettségin leggyakrabban használt összefüggést:<br>
+                        <div class="bg-white p-3 rounded text-center border font-mono text-sm my-2 text-indigo-900 font-bold">
+                            $$[H^+]_e = K_s \cdot \frac{c_{sav}}{c_{so}}$$
+                        </div>
+                        </li>
+                    </ol>
+                    
+                    <p class="text-sm mb-1"><strong>Miért számolhatunk anyagmennyiséggel (mólokkal) is?</strong></p>
+                    <p class="text-sm">Mivel a sav és a só ugyanabban a közös, $V$ térfogatú oldatban van, a koncentrációkat felírhatjuk $c = \frac{n}{V}$ alakban. Ezt behelyettesítve látható, hogy a törtben a térfogatok kiejtik egymást:</p>
+                    <div class="bg-white p-3 rounded text-center border font-mono text-sm my-2 text-indigo-900 font-bold">
+                        $$[H^+]_e = K_s \cdot \frac{\frac{n_{sav}}{V}}{\frac{n_{so}}{V}} = K_s \cdot \frac{n_{sav}}{n_{so}}$$
+                    </div>
+                    
+                    <p class="text-sm italic text-slate-600 mt-3 border-t pt-2">Megjegyzés: Ha mindkét oldal negatív logaritmusát vesszük, megkapjuk a biológiában és egyetemen is gyakran használt ún. <strong>Henderson-Hasselbalch egyenletet</strong>: $pH = pK_s - \lg\left(\frac{c_{sav}}{c_{so}}\right)$</p>
+                </div>
+
+                <div class="bg-green-50 border border-green-200 rounded-xl p-6">
+                    <h3 class="font-bold text-green-800 mb-2 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                        5. Minta Feladat: Pufferoldat készítése (Titrálás típusú feladat)
+                    </h3>
+                    <p class="font-medium">$100 \ cm^3$ térfogatú, $0,200 \ mol/dm^3$ koncentrációjú ecetsavoldathoz ($K_s = 1,8 \cdot 10^{-5}$) hány gramm szilárd nátrium-hidroxidot kell adni, hogy a keletkező pufferoldat pH-ja pontosan $5,00$ legyen? (A térfogatváltozástól eltekintünk. $M_{NaOH} = 40,0 \ g/mol$)</p>
+                    <div class="mt-4 p-4 bg-white rounded shadow-inner text-sm space-y-3">
+                        <p><strong>Megoldás lépései:</strong></p>
+                        <p><strong>1. Kiindulási anyagmennyiségek és a reakció:</strong><br>
+                        Kiinduló sav: $n_{sav(0)} = 0,100 \ dm^3 \cdot 0,200 \ mol/dm^3 = 0,020 \ mol$<br>
+                        Hozzáadott NaOH: $x \ mol$.<br>
+                        Reakció: $CH_3COOH + NaOH \rightarrow CH_3COONa + H_2O$</p>
+                        
+                        <p><strong>2. Anyagmennyiségek a reakció után (egyensúlyban):</strong><br>
+                        Mivel puffert akarunk készíteni, a lúg kevesebb kell legyen, mint a sav (hogy maradjon sav!).<br>
+                        A lúg teljesen elfogy: $x \ mol$ reagál.<br>
+                        Keletkezik $x \ mol$ só ($CH_3COONa$).<br>
+                        Megmaradó sav: $(0,020 - x) \ mol$.</p>
+                        
+                        <p><strong>3. Behelyettesítés a puffer képletébe:</strong><br>
+                        A megkívánt pH = 5,00 $\Rightarrow [H^+]_e = 1,0 \cdot 10^{-5} \ mol/dm^3$.<br>
+                        $$ [H^+]_e = K_s \cdot \frac{n_{sav}}{n_{so}} $$
+                        $$ 1,0 \cdot 10^{-5} = 1,8 \cdot 10^{-5} \cdot \frac{0,020 - x}{x} $$</p>
+
+                        <p><strong>4. Az egyenlet megoldása:</strong><br>
+                        Osszuk el mindkét oldalt $10^{-5}$-nel:<br>
+                        $1 = 1,8 \cdot \frac{0,020 - x}{x}$ <br>
+                        $x = 0,036 - 1,8x$<br>
+                        $2,8x = 0,036 \Rightarrow x = 0,01286 \ mol$ (ennyi NaOH kell).</p>
+
+                        <p><strong>5. Tömeg kiszámítása:</strong><br>
+                        $$ m_{NaOH} = n \cdot M = 0,01286 \ mol \cdot 40,0 \ g/mol = \mathbf{0,514 \ g} $$</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. Gyakorló feladatsor -->
+            <section id="gyakorlas" class="bg-indigo-50 rounded-xl shadow-inner p-8 border-t-4 border-indigo-600 scroll-mt-28">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-2">Gyakorló feladatsor (Emelt szint)</h2>
+                <p class="text-slate-600 mb-6">Próbáld meg önállóan megoldani a feladatokat, majd ellenőrizd a megoldást a gombra kattintva!</p>
+
+                <div class="space-y-6">
+                    <!-- Feladat 1 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">1. Feladat (Közömbösítés, Erős-Erős)</h4>
+                        <p class="mb-4">Összeöntünk $150 \ cm^3$ $0,050 \ mol/dm^3$-es kénsavoldatot és $250 \ cm^3$ $0,100 \ mol/dm^3$-es kálium-hidroxid-oldatot. Milyen lesz a keletkező oldat kémhatása és mennyi lesz a pH-ja? (Feltételezzük a térfogatok összeadódását).</p>
+                        
+                        <button onclick="toggleSolution('sol1')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        
+                        <div id="sol1" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm">
+                            <p><strong>1. Anyagmennyiségek számítása:</strong></p>
+                            <p>$n(H_2SO_4) = 0,150 \cdot 0,050 = 0,0075 \ mol$. Ebből az $n(H^+) = 2 \cdot 0,0075 = \mathbf{0,015 \ mol}$.</p>
+                            <p>$n(KOH) = 0,250 \cdot 0,100 = \mathbf{0,025 \ mol} = n(OH^-)$.</p>
+                            <p><strong>2. Reakció és maradék:</strong></p>
+                            <p>Az $OH^-$ van feleslegben. $0,025 \ mol - 0,015 \ mol = \mathbf{0,010 \ mol \ OH^- \ marad}$. Az oldat <strong>lúgos</strong> lesz.</p>
+                            <p><strong>3. Új koncentráció és pH:</strong></p>
+                            <p>Össztérfogat: $V_{ossz} = 150 + 250 = 400 \ cm^3 = 0,400 \ dm^3$.</p>
+                            <p>$[OH^-]_e = \frac{0,010 \ mol}{0,400 \ dm^3} = 0,025 \ mol/dm^3$.</p>
+                            <p>$pOH = -\lg(0,025) = 1,60 \Rightarrow \mathbf{pH = 12,40}$</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 2 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">2. Feladat (Gyenge sav)</h4>
+                        <p class="mb-4">Egy egyértékű gyenge sav $0,20 \ mol/dm^3$ koncentrációjú oldatának pH-ja 2,50. Számítsa ki a sav disszociációállandóját ($K_s$) és a disszociációfokot ($\alpha$) százalékban!</p>
+                        
+                        <button onclick="toggleSolution('sol2')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        
+                        <div id="sol2" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm">
+                            <p><strong>1. $[H^+]_e$ kiszámítása a pH-ból:</strong></p>
+                            <p>$[H^+]_e = 10^{-pH} = 10^{-2,50} = \mathbf{3,16 \cdot 10^{-3} \ mol/dm^3}$.</p>
+                            <p>Mivel egyértékű savról van szó, egyensúlyban $[H^+]_e = [A^-]_e = x = 3,16 \cdot 10^{-3}$.</p>
+                            <p><strong>2. Disszociációfok ($\alpha$):</strong></p>
+                            <p>$\alpha = \frac{[H^+]_e}{c} = \frac{3,16 \cdot 10^{-3}}{0,20} = 0,0158 \Rightarrow \mathbf{1,58\%}$.</p>
+                            <p><strong>3. Savállandó ($K_s$):</strong></p>
+                            <p>Egyensúlyi savkoncentráció: $0,20 - 3,16 \cdot 10^{-3} = 0,1968 \ mol/dm^3$.</p>
+                            <p>$K_s = \frac{[H^+]_e[A^-]_e}{[HA]_e} = \frac{(3,16 \cdot 10^{-3})^2}{0,1968} = \mathbf{5,07 \cdot 10^{-5}}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 3 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">3. Feladat (Puffer és hidrolízis - Komplex)</h4>
+                        <p class="mb-4">Adott egy ammónia-oldat ($c = 0,100 \ mol/dm^3$, $K_b = 1,8 \cdot 10^{-5}$).<br>a) Számítsa ki a tiszta ammónia-oldat pH-ját!<br>b) Mennyi lesz a pH, ha $100 \ cm^3$ oldatba $0,005 \ mol$ szilárd hidrogén-klorid (HCl) gázt vezetünk be (térfogat nem változik)?</p>
+                        
+                        <button onclick="toggleSolution('sol3')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        
+                        <div id="sol3" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>a) Tiszta ammónia-oldat pH-ja:</strong></p>
+                            <p>Gyenge bázis: $[OH^-]_e \approx \sqrt{K_b \cdot c} = \sqrt{1,8 \cdot 10^{-5} \cdot 0,100} = 1,34 \cdot 10^{-3} \ mol/dm^3$.</p>
+                            <p>$pOH = 2,87 \Rightarrow \mathbf{pH = 11,13}$.</p>
+                            
+                            <hr class="my-2 border-slate-300">
+                            
+                            <p><strong>b) HCl bevezetése utáni pH (Puffer képződés):</strong></p>
+                            <p>Kiindulási $NH_3$ anyagmennyiség: $n_0 = 0,100 \ dm^3 \cdot 0,100 \ mol/dm^3 = 0,010 \ mol$.</p>
+                            <p>Hozzáadott $HCl$ anyagmennyiség: $0,005 \ mol$.</p>
+                            <p>Reakció: $NH_3 + HCl \rightarrow NH_4Cl$</p>
+                            <p>A $0,005 \ mol$ $HCl$ elreagál $0,005 \ mol$ $NH_3$-mal. Keletkezik $0,005 \ mol$ $NH_4^+$-ion (só).</p>
+                            <p>Megmarad $NH_3$: $0,010 - 0,005 = 0,005 \ mol$.</p>
+                            <p>Mivel egy gyenge bázis ($NH_3$) és a sója ($NH_4^+$) van jelen, ez egy <strong>lúgos puffer</strong>.</p>
+                            <p>Lúgos puffer képlete: $[OH^-]_e = K_b \cdot \frac{n_{bazis}}{n_{so}}$</p>
+                            <p>$[OH^-]_e = 1,8 \cdot 10^{-5} \cdot \frac{0,005}{0,005} = 1,8 \cdot 10^{-5} \ mol/dm^3$.</p>
+                            <p>$pOH = -\lg(1,8 \cdot 10^{-5}) = 4,74$.</p>
+                            <p>$\mathbf{pH} = 14 - 4,74 = \mathbf{9,26}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 4 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">4. Feladat (Erős sav hígítása)</h4>
+                        <p class="mb-4">$10,0 \ cm^3$ térfogatú, $2,00 \ mol/dm^3$ koncentrációjú sósavat ($HCl$) $500 \ cm^3$-re hígítunk desztillált vízzel. Mennyi lesz a kapott oldat pH-ja?</p>
+                        <button onclick="toggleSolution('sol4')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol4" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Oldott anyag anyagmennyisége:</strong></p>
+                            <p>$n(HCl) = c_1 \cdot V_1 = 2,00 \ mol/dm^3 \cdot 0,010 \ dm^3 = 0,020 \ mol$. (Ez a hígítás során nem változik!)</p>
+                            <p><strong>2. Új koncentráció és pH:</strong></p>
+                            <p>$c_2 = \frac{n}{V_2} = \frac{0,020 \ mol}{0,500 \ dm^3} = 0,040 \ mol/dm^3$.</p>
+                            <p>Mivel a sósav erős egyértékű sav, $[H^+]_e = c_2 = 0,040 \ mol/dm^3$.</p>
+                            <p>$\mathbf{pH} = -\lg(0,040) = \mathbf{1,40}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 5 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">5. Feladat (Tömegszámítás pH alapján - kétértékű erős lúg)</h4>
+                        <p class="mb-4">Hány gramm bárium-hidroxidot ($Ba(OH)_2$) tartalmaz $250 \ cm^3$ térfogatú, $12,50$-es pH-jú oldat? ($A_r(Ba)=137,3, A_r(O)=16,0, A_r(H)=1,0$)</p>
+                        <button onclick="toggleSolution('sol5')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol5" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. $[OH^-]_e$ meghatározása:</strong></p>
+                            <p>$pOH = 14 - 12,50 = 1,50 \Rightarrow [OH^-]_e = 10^{-1,50} = 0,0316 \ mol/dm^3$.</p>
+                            <p><strong>2. A lúg koncentrációja:</strong></p>
+                            <p>A bárium-hidroxid erős, <strong>kétértékű</strong> lúg ($Ba(OH)_2 \rightarrow Ba^{2+} + 2OH^-$). Ezért a lúg koncentrációja a hidroxidion-koncentráció fele:</p>
+                            <p>$c(Ba(OH)_2) = \frac{0,0316}{2} = 0,0158 \ mol/dm^3$.</p>
+                            <p><strong>3. Anyagmennyiség és tömeg:</strong></p>
+                            <p>$n = c \cdot V = 0,0158 \ mol/dm^3 \cdot 0,250 \ dm^3 = 0,00395 \ mol$.</p>
+                            <p>$M(Ba(OH)_2) = 137,3 + 2 \cdot (16,0 + 1,0) = 171,3 \ g/mol$.</p>
+                            <p>$\mathbf{m} = 0,00395 \ mol \cdot 171,3 \ g/mol = \mathbf{0,677 \ g}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 6 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">6. Feladat (Gyenge sav savállandójának számítása)</h4>
+                        <p class="mb-4">Egy $0,100 \ mol/dm^3$ koncentrációjú hangyasav-oldat ($HCOOH$) pH-ja $2,38$. Határozza meg a hangyasav savállandóját ($K_s$)!</p>
+                        <button onclick="toggleSolution('sol6')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol6" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Egyensúlyi ionkoncentrációk:</strong></p>
+                            <p>$[H^+]_e = 10^{-pH} = 10^{-2,38} = 4,17 \cdot 10^{-3} \ mol/dm^3$.</p>
+                            <p>Mivel a sav egyértékű, $[HCOO^-]_e = [H^+]_e = 4,17 \cdot 10^{-3} \ mol/dm^3$.</p>
+                            <p><strong>2. Egyensúlyi savkoncentráció:</strong></p>
+                            <p>$[HCOOH]_e = c - x = 0,100 - 0,00417 = 0,09583 \ mol/dm^3$.</p>
+                            <p><strong>3. Savállandó:</strong></p>
+                            <p>$K_s = \frac{[H^+]_e \cdot [HCOO^-]_e}{[HCOOH]_e} = \frac{(4,17 \cdot 10^{-3})^2}{0,09583} = \mathbf{1,81 \cdot 10^{-4}}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 7 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">7. Feladat (Gyenge bázis disszociációfoka)</h4>
+                        <p class="mb-4">Számítsa ki a $0,500 \ mol/dm^3$ koncentrációjú metil-amin ($CH_3NH_2$) oldat pH-ját és disszociációfokát százalékosan! A bázisállandó $K_b = 4,40 \cdot 10^{-4}$.</p>
+                        <button onclick="toggleSolution('sol7')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol7" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Hidroxidion-koncentráció:</strong></p>
+                            <p>Mivel $K_b$ kicsi, próbálkozhatunk a közelítő képlettel: $[OH^-]_e \approx \sqrt{K_b \cdot c} = \sqrt{4,40 \cdot 10^{-4} \cdot 0,500} = \sqrt{2,20 \cdot 10^{-4}} = 0,01483 \ mol/dm^3$.</p>
+                            <p><strong>2. Disszociációfok ($\alpha$):</strong></p>
+                            <p>$\alpha = \frac{[OH^-]_e}{c} = \frac{0,01483}{0,500} = 0,0297 \Rightarrow \mathbf{2,97\%}$. (Az 5% alatti szabály teljesül, a közelítés jogos volt).</p>
+                            <p><strong>3. pH számítás:</strong></p>
+                            <p>$pOH = -\lg(0,01483) = 1,83 \Rightarrow \mathbf{pH} = 14 - 1,83 = \mathbf{12,17}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 8 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">8. Feladat (Közömbösítés eltérő térfogattal)</h4>
+                        <p class="mb-4">Összeöntünk $100 \ cm^3$ $0,200 \ mol/dm^3$ salétromsavat és $150 \ cm^3$ $0,200 \ mol/dm^3$ nátrium-hidroxidot. Mennyi az elegy pH-ja?</p>
+                        <button onclick="toggleSolution('sol8')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol8" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Anyagmennyiségek:</strong></p>
+                            <p>$n(HNO_3) = n(H^+) = 0,100 \ dm^3 \cdot 0,200 \ mol/dm^3 = 0,020 \ mol$.</p>
+                            <p>$n(NaOH) = n(OH^-) = 0,150 \ dm^3 \cdot 0,200 \ mol/dm^3 = 0,030 \ mol$.</p>
+                            <p><strong>2. Reakció (Közömbösítés):</strong></p>
+                            <p>A $0,020 \ mol$ sav elfogyaszt $0,020 \ mol$ bázist. Marad: $0,030 - 0,020 = 0,010 \ mol \ OH^-$. (Lúgos felesleg).</p>
+                            <p><strong>3. Koncentráció és pH az új térfogatban:</strong></p>
+                            <p>$V_{ossz} = 100 + 150 = 250 \ cm^3 = 0,250 \ dm^3$.</p>
+                            <p>$[OH^-]_e = \frac{0,010 \ mol}{0,250 \ dm^3} = 0,040 \ mol/dm^3$.</p>
+                            <p>$pOH = -\lg(0,040) = 1,40 \Rightarrow \mathbf{pH = 12,60}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 9 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">9. Feladat (Közömbösítés - kétértékű sav)</h4>
+                        <p class="mb-4">$50,0 \ cm^3$ $0,100 \ mol/dm^3$-es kénsavoldat ($H_2SO_4$) teljes közömbösítéséhez hány $cm^3$ $0,100 \ mol/dm^3$-es nátrium-hidroxid ($NaOH$) oldatra van szükség?</p>
+                        <button onclick="toggleSolution('sol9')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol9" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. A savban lévő $H^+$ mennyisége:</strong></p>
+                            <p>$n(H_2SO_4) = 0,050 \ dm^3 \cdot 0,100 \ mol/dm^3 = 0,005 \ mol$.</p>
+                            <p>Mivel a kénsav kétértékű sav, 1 mol kénsav 2 mol $H^+$-t ad le. $n(H^+) = 2 \cdot 0,005 = 0,010 \ mol$.</p>
+                            <p><strong>2. A lúg térfogata:</strong></p>
+                            <p>A közömbösítéshez $0,010 \ mol \ OH^-$ kell. Mivel a NaOH egyértékű, ez $0,010 \ mol \ NaOH$-t jelent.</p>
+                            <p>$V(NaOH) = \frac{n}{c} = \frac{0,010 \ mol}{0,100 \ mol/dm^3} = 0,100 \ dm^3 = \mathbf{100 \ cm^3}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 10 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">10. Feladat (Pufferoldat pH-ja)</h4>
+                        <p class="mb-4">Mekkora annak az $1,00 \ dm^3$ pufferoldatnak a pH-ja, amely $0,200 \ mol$ ecetsavat és $0,300 \ mol$ nátrium-acetátot tartalmaz? ($K_s = 1,80 \cdot 10^{-5}$)</p>
+                        <button onclick="toggleSolution('sol10')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol10" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Puffer egyenlet használata:</strong></p>
+                            <p>Közvetlenül számolhatunk mólokkal, mert a térfogat közös.</p>
+                            <p>$[H^+]_e = K_s \cdot \frac{n_{sav}}{n_{so}} = 1,80 \cdot 10^{-5} \cdot \frac{0,200}{0,300} = 1,20 \cdot 10^{-5} \ mol/dm^3$.</p>
+                            <p><strong>2. pH:</strong></p>
+                            <p>$\mathbf{pH} = -\lg(1,20 \cdot 10^{-5}) = \mathbf{4,92}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 11 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">11. Feladat (Pufferoldat hígítása)</h4>
+                        <p class="mb-4">Az előző (10.) feladatban szereplő pufferoldatból kiveszünk $100 \ cm^3$-t, és desztillált vízzel pontosan tízszeres térfogatúra hígítjuk. Mi lesz a kapott oldat pH-ja?</p>
+                        <button onclick="toggleSolution('sol11')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol11" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>Megoldás (Logikai):</strong></p>
+                            <p>A pufferoldatok egyik legfontosabb tulajdonsága (az egyenletből is látszik), hogy az oxóniumion-koncentráció a gyenge sav és sójának <strong>arányától</strong> függ, nem a pontos koncentrációjuktól. Hígítás során (ha eltekintünk a végtelen nagy hígítástól) a sav és a só koncentrációja is tizedére csökken, így az arányuk ($\frac{c_{sav}}{c_{so}}$) változatlan marad.</p>
+                            <p>Tehát a hígítás nem változtatja meg érdemben a puffer pH-ját. <strong>pH = 4,92</strong>.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 12 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">12. Feladat (Sók hidrolízise - egyenlet)</h4>
+                        <p class="mb-4">Írja fel a nátrium-karbonát ($Na_2CO_3$, szóda) hidrolízisének kémiai egyenletét (első lépés), és állapítsa meg a keletkező oldat kémhatását!</p>
+                        <button onclick="toggleSolution('sol12')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol12" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. A só disszociációja:</strong></p>
+                            <p>$Na_2CO_3 \rightarrow 2Na^+ + CO_3^{2-}$</p>
+                            <p><strong>2. Hidrolízis:</strong></p>
+                            <p>A nátriumion ($Na^+$) erős bázis ($NaOH$) kationja, nem hidrolizál.</p>
+                            <p>A karbonátion ($CO_3^{2-}$) gyenge sav ($H_2CO_3$) savmaradék-anionja, így hidrolizál (protont von el a víztől):</p>
+                            <p>$$CO_3^{2-} + H_2O \rightleftharpoons HCO_3^- + OH^-$$</p>
+                            <p><strong>3. Kémhatás:</strong></p>
+                            <p>Mivel a reakcióban hidroxidionok ($OH^-$) keletkeznek, az oldat kémhatása <strong>lúgos</strong> lesz.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 13 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">13. Feladat (Titrálás)</h4>
+                        <p class="mb-4">$20,0 \ cm^3$ ismeretlen koncentrációjú sósavoldatot titrálunk $0,100 \ mol/dm^3$ koncentrációjú $NaOH$ mérőoldattal. Az indikátor átcsapásáig pontosan $18,5 \ cm^3$ lúg fogy. Mennyi volt a sósav koncentrációja?</p>
+                        <button onclick="toggleSolution('sol13')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol13" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Fogyott mérőoldat anyagmennyisége:</strong></p>
+                            <p>$n(NaOH) = c \cdot V = 0,100 \ mol/dm^3 \cdot 0,0185 \ dm^3 = 0,00185 \ mol$.</p>
+                            <p><strong>2. Reakció és a sav koncentrációja:</strong></p>
+                            <p>$HCl + NaOH \rightarrow NaCl + H_2O$ (1:1 sztöchiometrikus arány)</p>
+                            <p>Ez azt jelenti, hogy a vizsgált $20,0 \ cm^3$ sósavban is $0,00185 \ mol$ $HCl$ volt.</p>
+                            <p>$\mathbf{c(HCl)} = \frac{n}{V_{sav}} = \frac{0,00185 \ mol}{0,0200 \ dm^3} = \mathbf{0,0925 \ mol/dm^3}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 14 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">14. Feladat (Gyenge savba lúg adagolása -> Puffer képződik)</h4>
+                        <p class="mb-4">$200 \ cm^3$ $0,100 \ mol/dm^3$-es ecetsavhoz adunk $100 \ cm^3$ $0,100 \ mol/dm^3$-es nátrium-hidroxid-oldatot. Milyen pH-jú oldatot kapunk? ($K_s = 1,80 \cdot 10^{-5}$)</p>
+                        <button onclick="toggleSolution('sol14')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol14" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Anyagmennyiségek a reakció előtt:</strong></p>
+                            <p>$n_{sav(0)} = 0,200 \ dm^3 \cdot 0,100 \ mol/dm^3 = 0,020 \ mol$.</p>
+                            <p>$n(NaOH) = 0,100 \ dm^3 \cdot 0,100 \ mol/dm^3 = 0,010 \ mol$.</p>
+                            <p><strong>2. Reakció (Közömbösítés):</strong></p>
+                            <p>A $0,010 \ mol$ lúg pontosan a sav <strong>felét</strong> közömbösíti. Keletkezik $0,010 \ mol$ só (nátrium-acetát).</p>
+                            <p>A megmaradó sav anyagmennyisége: $0,020 - 0,010 = 0,010 \ mol$.</p>
+                            <p><strong>3. pH számítás (Puffer!):</strong></p>
+                            <p>Látható, hogy $n_{sav} = n_{so} = 0,010 \ mol$. A puffer képlet alapján:</p>
+                            <p>$[H^+]_e = K_s \cdot \frac{n_{sav}}{n_{so}} = 1,80 \cdot 10^{-5} \cdot \frac{0,010}{0,010} = 1,80 \cdot 10^{-5} \ mol/dm^3$.</p>
+                            <p>$\mathbf{pH} = -\lg(1,80 \cdot 10^{-5}) = \mathbf{4,74}$. <em>(Ezt nevezzük félértékpontnak, ahol a $pH = pK_s$).</em></p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 15 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">15. Feladat (Erős savak elegyítése)</h4>
+                        <p class="mb-4">Összeöntünk $100 \ cm^3$ $0,100 \ mol/dm^3$-es sósavat és $100 \ cm^3$ $0,100 \ mol/dm^3$-es kénsavat. Mennyi a kapott elegy pH-ja?</p>
+                        <button onclick="toggleSolution('sol15')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol15" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. A savakból származó $H^+$ mennyiségek:</strong></p>
+                            <p>Sósavból ($HCl$ egyértékű): $n_1(H^+) = 0,100 \cdot 0,100 = 0,010 \ mol$.</p>
+                            <p>Kénsavból ($H_2SO_4$ kétértékű): $n_2(H^+) = 2 \cdot (0,100 \cdot 0,100) = 0,020 \ mol$.</p>
+                            <p>Összes oxóniumion: $n_{ossz}(H^+) = 0,010 + 0,020 = 0,030 \ mol$.</p>
+                            <p><strong>2. Koncentráció és pH:</strong></p>
+                            <p>$V_{ossz} = 100 + 100 = 200 \ cm^3 = 0,200 \ dm^3$.</p>
+                            <p>$[H^+]_e = \frac{0,030 \ mol}{0,200 \ dm^3} = 0,150 \ mol/dm^3$.</p>
+                            <p>$\mathbf{pH} = -\lg(0,150) = \mathbf{0,82}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 16 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">16. Feladat (pH érték eltolása hígítással)</h4>
+                        <p class="mb-4">Hányszorosára kell hígítani desztillált vízzel egy $pH=2,0$ sósavoldatot, hogy a pH-ja $4,0$ legyen?</p>
+                        <button onclick="toggleSolution('sol16')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol16" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>Megoldás:</strong></p>
+                            <p>Kezdeti állapot: $pH = 2,0 \Rightarrow [H^+]_{e1} = 10^{-2} = 0,01 \ mol/dm^3$.</p>
+                            <p>Végső állapot: $pH = 4,0 \Rightarrow [H^+]_{e2} = 10^{-4} = 0,0001 \ mol/dm^3$.</p>
+                            <p>A koncentráció $\frac{0,01}{0,0001} = 100$-ad részére csökkent. Mivel az oldott anyag mennyisége állandó, a koncentráció századára csökkenése azt jelenti, hogy a térfogatot a <strong>$100$-szorosára</strong> kell növelni.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 17 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">17. Feladat (Amfoter fém-hidroxid oldása lúgban)</h4>
+                        <p class="mb-4">Minimum hány $cm^3$ $2,00 \ mol/dm^3$ koncentrációjú nátrium-hidroxid-oldat képes feloldani (komplexként) $7,80 \ g$ szilárd alumínium-hidroxid csapadékot? ($A_r(Al)=27,0, A_r(O)=16,0, A_r(H)=1,0$)</p>
+                        <button onclick="toggleSolution('sol17')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol17" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. A csapadék anyagmennyisége:</strong></p>
+                            <p>$M(Al(OH)_3) = 27,0 + 3 \cdot (16,0 + 1,0) = 78,0 \ g/mol$.</p>
+                            <p>$n(Al(OH)_3) = \frac{7,80 \ g}{78,0 \ g/mol} = 0,100 \ mol$.</p>
+                            <p><strong>2. A komplexképződés egyenlete:</strong></p>
+                            <p>$$Al(OH)_3 + NaOH \rightarrow Na[Al(OH)_4]$$</p>
+                            <p>Az egyenlet alapján $1 \ mol$ alumínium-hidroxid pontosan $1 \ mol$ $NaOH$-val reagál, tehát a szükséges lúg anyagmennyisége: $0,100 \ mol$.</p>
+                            <p><strong>3. A lúg térfogata:</strong></p>
+                            <p>$\mathbf{V} = \frac{n}{c} = \frac{0,100 \ mol}{2,00 \ mol/dm^3} = 0,050 \ dm^3 = \mathbf{50,0 \ cm^3}$.</p>
+                        </div>
+                    </div>
+
+                    <!-- Feladat 18 -->
+                    <div class="bg-white p-5 rounded border border-indigo-100 shadow-sm">
+                        <h4 class="font-bold text-lg mb-2">18. Feladat (Puffer kapacitása - erős sav hozzáadása)</h4>
+                        <p class="mb-4">$1,00 \ dm^3$ lúgos pufferoldatban $0,100 \ mol$ ammónia ($NH_3$) és $0,100 \ mol$ ammónium-klorid ($NH_4Cl$) van. Az oldatba $0,020 \ mol$ hidrogén-klorid gázt vezetünk (a térfogat állandó marad). Számítsa ki az oldat új pH-ját! ($K_b = 1,80 \cdot 10^{-5}$)</p>
+                        <button onclick="toggleSolution('sol18')" class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded text-sm font-bold hover:bg-indigo-200 transition">Megoldás mutatása / elrejtése</button>
+                        <div id="sol18" class="solution mt-4 p-4 bg-slate-50 border border-slate-200 rounded text-sm space-y-2">
+                            <p><strong>1. Reakció az erős savval:</strong></p>
+                            <p>A hozzáadott erős sav ($HCl$) a puffer báziskomponensével (ammóniával) fog reagálni, miközben sót képez: $NH_3 + HCl \rightarrow NH_4Cl$.</p>
+                            <p><strong>2. Új anyagmennyiségek:</strong></p>
+                            <p>A $0,020 \ mol$ $HCl$ elfogyaszt $0,020 \ mol$ ammóniát: $n_{uj}(NH_3) = 0,100 - 0,020 = 0,080 \ mol$.</p>
+                            <p>Közben keletkezik $0,020 \ mol$ új só: $n_{uj}(NH_4^+) = 0,100 + 0,020 = 0,120 \ mol$.</p>
+                            <p><strong>3. pH számítás a lúgos pufferképlettel:</strong></p>
+                            <p>$[OH^-]_e = K_b \cdot \frac{n_{bazis}}{n_{so}} = 1,80 \cdot 10^{-5} \cdot \frac{0,080}{0,120} = 1,20 \cdot 10^{-5} \ mol/dm^3$.</p>
+                            <p>$pOH = -\lg(1,20 \cdot 10^{-5}) = 4,92 \Rightarrow \mathbf{pH} = 14 - 4,92 = \mathbf{9,08}$.</p>
+                            <p><em>(Eredetileg a pH 9,26 volt, tehát a 0,02 mol erős sav csak 0,18 pH-egységgel tolta el a kémhatást – ez a pufferhatás!)</em></p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            
+            <!-- Vissza a tetejére gomb (UX javítás) -->
+            <div class="text-center mt-12 mb-4">
+                <a href="#" class="inline-flex items-center justify-center px-6 py-3 bg-indigo-100 text-indigo-800 font-bold rounded-full hover:bg-indigo-200 transition shadow-sm">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+                    Ugrás az oldal tetejére
+                </a>
+            </div>
+
+        </main>
+    </div>
+
+    <footer class="bg-slate-800 text-slate-400 py-8 text-center text-sm">
+        <p>Készült az emelt szintű kémia érettségire készülők számára. Sok sikert a tanuláshoz!</p>
+    </footer>
+
+    <!-- Simple script for toggling solutions -->
+    <script>
+        function toggleSolution(id) {
+            var element = document.getElementById(id);
+            if (element.style.display === "block") {
+                element.style.display = "none";
+            } else {
+                element.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>
